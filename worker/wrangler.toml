@@ -1,0 +1,31 @@
+name = "markdown-workspace-worker"
+main = "src/index.ts"
+compatibility_date = "2024-07-25"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "markdown-workspace-db"
+database_id = "YOUR_D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "markdown-workspace-r2"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "YOUR_KV_NAMESPACE_ID"
+
+[[durable_objects.bindings]]
+name = "REMINDER_SCHEDULER"
+class_name = "ReminderScheduler"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["ReminderScheduler"]
+
+[vars]
+ENVIRONMENT = "production"
+
+# Cloudflare Access is handled at the zone level — no code changes needed.
+# Add an Access policy for your Pages/Workers domain in the Cloudflare dashboard.

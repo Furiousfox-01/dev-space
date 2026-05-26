@@ -1,0 +1,10 @@
+{
+  "name": "markdown-workspace",
+  "private": true,
+  "workspaces": ["worker", "frontend"],
+  "scripts": {
+    "dev:worker": "npm run dev --workspace=worker",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "deploy": "npm run deploy --workspace=worker && npm run deploy --workspace=frontend"
+  }
+}
