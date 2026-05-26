@@ -9,7 +9,7 @@ interface Props {
   onNavigate?: (docId: string) => void;
 }
 
-const AUTOSAVE_DELAY = 1500;
+const AUTOSAVE_DELAY = 1000;
 
 export function EditorPane({ doc, onUpdate, onNavigate }: Props) {
   const [title, setTitle] = useState(doc.title);

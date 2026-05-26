@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { api, Reminder } from '../lib/api';
 
-const POLL_INTERVAL = 5 * 60 * 1000; // 5 minutes
+const POLL_INTERVAL = 30 * 1000; // 30 seconds
 
 export function useReminders() {
   const [reminders, setReminders] = useState<Reminder[]>([]);
