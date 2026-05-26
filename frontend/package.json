@@ -1,11 +1,11 @@
 {
-  "name": "markdown-workspace-frontend",
+  "name": "dev-space-frontend",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "deploy": "vite build && wrangler pages deploy dist --project-name=markdown-workspace"
+    "deploy": "vite build && wrangler pages deploy dist --project-name=dev-space"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.18.0",

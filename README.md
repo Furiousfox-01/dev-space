@@ -1,6 +1,6 @@
-# Markdown Workspace
+# Dev Space
 
-A personal markdown workspace — docs, sheets, reminders, tagging, and search.
+A personal dev space — docs, sheets, reminders, tagging, and search.
 Built entirely on Cloudflare's free tier.
 
 ## Stack
@@ -28,15 +28,15 @@ wrangler login
 
 ```bash
 # D1 database
-wrangler d1 create markdown-workspace-db
+wrangler d1 create dev-space-db
 # → copy the database_id into worker/wrangler.toml
 
 # KV namespace
-wrangler kv:namespace create markdown-workspace-kv
+wrangler kv:namespace create dev-space-kv
 # → copy the id into worker/wrangler.toml
 
 # R2 bucket
-wrangler r2 bucket create markdown-workspace-r2
+wrangler r2 bucket create dev-space-r2
 # (no ID needed — bucket_name in wrangler.toml matches)
 ```
 
@@ -51,7 +51,7 @@ Open `worker/wrangler.toml` and fill in:
 ```bash
 cd worker
 npm install
-npx wrangler d1 execute markdown-workspace-db --file=./schema.sql
+npx wrangler d1 execute dev-space-db --file=./schema.sql
 ```
 
 ### 5. Deploy the Worker
@@ -59,7 +59,7 @@ npx wrangler d1 execute markdown-workspace-db --file=./schema.sql
 ```bash
 cd worker
 npm run deploy
-# → note the Worker URL: https://markdown-workspace-worker.YOUR_SUBDOMAIN.workers.dev
+# → note the Worker URL: https://dev-space-worker.YOUR_SUBDOMAIN.workers.dev
 ```
 
 ### 6. Deploy the Frontend
@@ -70,14 +70,14 @@ npm install
 cp .env.example .env.local
 # Edit .env.local — set VITE_API_URL to your Worker URL from step 5
 npm run build
-npx wrangler pages deploy dist --project-name=markdown-workspace
+npx wrangler pages deploy dist --project-name=dev-space
 ```
 
 ### 7. Set up Cloudflare Access (auth)
 
 1. Go to **Zero Trust → Access → Applications** in the Cloudflare dashboard
 2. Click **Add an application → Self-hosted**
-3. Set the application domain to your Pages URL (e.g. `markdown-workspace.pages.dev`)
+3. Set the application domain to your Pages URL (e.g. `dev-space.pages.dev`)
 4. Add a policy: allow your email address
 5. Done — all traffic to the app requires login with your email
 

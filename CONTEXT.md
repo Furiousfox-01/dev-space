@@ -1,4 +1,4 @@
-# Markdown Workspace — Glossary
+# Dev Space — Glossary
 
 ## Domains & Aggregates
 

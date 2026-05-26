@@ -1,5 +1,5 @@
 {
-  "name": "markdown-workspace",
+  "name": "dev-space",
   "private": true,
   "workspaces": ["worker", "frontend"],
   "scripts": {
