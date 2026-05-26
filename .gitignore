@@ -1,7 +1,15 @@
 node_modules/
 dist/
+.wrangler/
+dev-dist/
+
 .env
 .env.local
-.wrangler/
+.env.*.local
+
 worker/dev-shims.d.ts
 *.tsbuildinfo
+
+*.log
+.DS_Store
+Thumbs.db
