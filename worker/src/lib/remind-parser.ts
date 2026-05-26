@@ -112,6 +112,7 @@ export function parseReminders(markdown: string): ParsedReminder[] {
       const parsed = parseTime(todayMatch[1]);
       if (parsed) {
         const d = setTime(now, parsed.hours, parsed.minutes);
+        if (d.getTime() <= Date.now()) d.setDate(d.getDate() + 1);
         results.push({ raw, triggerAt: d.getTime(), recurrence: null });
       }
       continue;
