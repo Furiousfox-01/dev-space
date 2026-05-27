@@ -4,17 +4,17 @@ compatibility_date = "2024-07-25"
 compatibility_flags = ["nodejs_compat"]
 
 [[d1_databases]]
-binding = "DB"
+binding = "dev-space-db"
 database_name = "dev-space-db"
-database_id = "YOUR_D1_DATABASE_ID"
+database_id = "2376b6d8-33cf-4f98-9995-777726c313aa"
 
 [[r2_buckets]]
-binding = "R2"
+binding = "dev_space_r2"
 bucket_name = "dev-space-r2"
 
 [[kv_namespaces]]
-binding = "KV"
-id = "YOUR_KV_NAMESPACE_ID"
+binding = "dev_space_kv"
+id = "46bba3aef1b4444cb0501983e660d5d3"
 
 [[durable_objects.bindings]]
 name = "REMINDER_SCHEDULER"
@@ -22,7 +22,7 @@ class_name = "ReminderScheduler"
 
 [[migrations]]
 tag = "v1"
-new_classes = ["ReminderScheduler"]
+new_sqlite_classes = ["ReminderScheduler"]
 
 [vars]
 ENVIRONMENT = "production"
