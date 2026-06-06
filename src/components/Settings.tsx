@@ -45,7 +45,7 @@ export function Settings() {
     <div className="na-pad" style={{ maxWidth: 680 }}>
       <h2 className="t-h2" style={{ marginBottom: 6 }}>Settings</h2>
       <p className="muted" style={{ marginTop: 0, marginBottom: 32, fontFamily: 'var(--font-mono)', fontSize: 13 }}>
-        Customize how NoteArea looks and feels.
+        Customize how Gravel looks and feels.
       </p>
 
       <section className="settings-section">
