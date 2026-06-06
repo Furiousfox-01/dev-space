@@ -60,12 +60,12 @@ function SheetEditor({ id }: { id: string }) {
     setSheets(list => list.map(s => s.id === id ? { ...s, ...p, updated } : s));
     api.sheets.update(id, { ...p, updated }).catch(() => {});
   }
-  function setCell(r: number, c: number, v: string) { const rows = sheet.rows.map(row => row.slice()); rows[r][c] = v; patch({ rows }); }
-  function setCol(c: number, v: string) { const cols = sheet.cols.slice(); cols[c] = v; patch({ cols }); }
-  function addRow() { patch({ rows: [...sheet.rows, sheet.cols.map(() => '')] }); }
-  function addCol() { patch({ cols: [...sheet.cols, 'Column ' + String.fromCharCode(65 + sheet.cols.length)], rows: sheet.rows.map(r => [...r, '']) }); }
-  function delRow(r: number) { patch({ rows: sheet.rows.filter((_, i) => i !== r) }); }
-  function delCol(c: number) { patch({ cols: sheet.cols.filter((_, i) => i !== c), rows: sheet.rows.map(r => r.filter((_, i) => i !== c)) }); }
+  function setCell(r: number, c: number, v: string) { const rows = sheet!.rows.map(row => row.slice()); rows[r][c] = v; patch({ rows }); }
+  function setCol(c: number, v: string) { const cols = sheet!.cols.slice(); cols[c] = v; patch({ cols }); }
+  function addRow() { patch({ rows: [...sheet!.rows, sheet!.cols.map(() => '')] }); }
+  function addCol() { patch({ cols: [...sheet!.cols, 'Column ' + String.fromCharCode(65 + sheet!.cols.length)], rows: sheet!.rows.map(r => [...r, '']) }); }
+  function delRow(r: number) { patch({ rows: sheet!.rows.filter((_, i) => i !== r) }); }
+  function delCol(c: number) { patch({ cols: sheet!.cols.filter((_, i) => i !== c), rows: sheet!.rows.map(r => r.filter((_, i) => i !== c)) }); }
   function del() { setSheets(list => list.filter(s => s.id !== id)); api.sheets.remove(id).catch(() => {}); go('sheets'); }
 
   return (
