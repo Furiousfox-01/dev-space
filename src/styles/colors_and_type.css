@@ -6,12 +6,12 @@
    candy pastels, Archivo Black uppercase display, square corners.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
   /* ---- Brand font families ---- */
-  --font-hand:    'Archivo Black', sans-serif;
-  --font-ui:      'Archivo Black', sans-serif;
+  --font-hand:    'Archivo Black', sans-serif;   /* display + headings only */
+  --font-ui:      'Archivo', sans-serif;          /* body, nav, UI labels */
   --font-mono:    'JetBrains Mono', ui-monospace, monospace;
 
   /* ============================================================
@@ -130,10 +130,10 @@
   text-transform: uppercase;
   letter-spacing: -0.03em;
 }
-.t-h1 { font-family: var(--font-ui); font-size: var(--h1-size); line-height: var(--h1-lh); font-weight: var(--h1-wt); color: var(--ink); text-transform: uppercase; letter-spacing: -0.02em; }
-.t-h2 { font-family: var(--font-ui); font-size: var(--h2-size); line-height: var(--h2-lh); font-weight: var(--h2-wt); color: var(--ink); text-transform: uppercase; letter-spacing: -0.02em; }
-.t-h3 { font-family: var(--font-ui); font-size: var(--h3-size); line-height: var(--h3-lh); font-weight: var(--h3-wt); color: var(--ink); text-transform: uppercase; letter-spacing: -0.01em; }
-.t-h4 { font-family: var(--font-ui); font-size: var(--h4-size); line-height: var(--h4-lh); font-weight: var(--h4-wt); color: var(--ink); }
+.t-h1 { font-family: var(--font-hand); font-size: var(--h1-size); line-height: var(--h1-lh); font-weight: var(--h1-wt); color: var(--ink); text-transform: uppercase; letter-spacing: -0.02em; }
+.t-h2 { font-family: var(--font-hand); font-size: var(--h2-size); line-height: var(--h2-lh); font-weight: var(--h2-wt); color: var(--ink); text-transform: uppercase; letter-spacing: -0.02em; }
+.t-h3 { font-family: var(--font-hand); font-size: var(--h3-size); line-height: var(--h3-lh); font-weight: var(--h3-wt); color: var(--ink); text-transform: uppercase; letter-spacing: -0.01em; }
+.t-h4 { font-family: var(--font-hand); font-size: var(--h4-size); line-height: var(--h4-lh); font-weight: var(--h4-wt); color: var(--ink); }
 
 .t-body    { font-family: var(--font-ui); font-size: var(--body-size); line-height: var(--body-lh); font-weight: 400; color: var(--ink); }
 .t-body-sm { font-family: var(--font-ui); font-size: var(--body-sm-size); line-height: var(--body-sm-lh); font-weight: 400; color: var(--ink-2); }
