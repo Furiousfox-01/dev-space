@@ -3,7 +3,6 @@ import { Icon } from './icons';
 import { useNA } from '../store/store';
 import { parseRemind } from '../utils/parseRemind';
 import { formatWhen } from '../utils/formatWhen';
-import { renderMarkdown } from '../utils/renderMarkdown';
 
 function scanReminders(text: string) {
   if (!text) return [];
@@ -66,14 +65,14 @@ interface MarkdownEditorProps {
   source?: string;
   toolbar?: boolean;
   autoFocus?: boolean;
+  onEsc?: () => void;
 }
 
 export function MarkdownEditor({
   value, onChange, placeholder, minHeight = 360,
-  source = 'Doc', toolbar = true, autoFocus = false,
+  source = 'Doc', toolbar = true, autoFocus = false, onEsc,
 }: MarkdownEditorProps) {
   const ref = useRef<HTMLTextAreaElement>(null);
-  const [mode, setMode] = useState<'write' | 'preview'>('write');
 
   function applyWrap(w: string[], lineMode: boolean) {
     const el = ref.current; if (!el) return;
@@ -106,25 +105,12 @@ export function MarkdownEditor({
               <Icon name={t.icon} size={18} />
             </button>
           ))}
-          <div className="spacer" />
-          <div className="seg">
-            <button className={'segbtn ' + (mode === 'write' ? 'on' : '')} onClick={() => setMode('write')}>
-              <Icon name="edit" size={15} /> Write
-            </button>
-            <button className={'segbtn ' + (mode === 'preview' ? 'on' : '')} onClick={() => setMode('preview')}>
-              <Icon name="eye" size={15} /> Preview
-            </button>
-          </div>
         </div>
       )}
-      {mode === 'write' ? (
-        <textarea ref={ref} className="field mono-edit" value={value} placeholder={placeholder}
-          onChange={(e) => onChange(e.target.value)}
-          style={{ minHeight, resize: 'vertical', lineHeight: 1.7, fontSize: 15.5 }} />
-      ) : (
-        <div className="md preview-pane" style={{ minHeight }}
-          dangerouslySetInnerHTML={{ __html: renderMarkdown(value) }} />
-      )}
+      <textarea ref={ref} className="field mono-edit" value={value} placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => { if (e.key === 'Escape') onEsc?.(); }}
+        style={{ minHeight, resize: 'vertical', lineHeight: 1.7, fontSize: 15.5 }} />
       <RemindStrip text={value} source={source} />
     </div>
   );

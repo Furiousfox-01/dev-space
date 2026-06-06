@@ -15,34 +15,64 @@ const STICKY_TINT: Record<string, string> = {
 
 interface StickyCardProps {
   note: Sticky;
-  onChange: (p: Partial<Sticky>) => void;
+  onChange: (p: Partial<Sticky>) => void;   // state + API save
+  onMove: (p: Partial<Sticky>) => void;     // state only, no API (used during drag)
   onDelete: (id: string) => void;
   onFront: (id: string) => void;
 }
 
-function StickyCard({ note, onChange, onDelete, onFront }: StickyCardProps) {
+function StickyCard({ note, onChange, onMove, onDelete, onFront }: StickyCardProps) {
   const [editing, setEditing] = useState(false);
+  const [draftBody, setDraftBody] = useState('');
 
   function startDrag(e: React.PointerEvent) {
     if (editing) return;
     if ((e.target as HTMLElement).closest('.sticky-act') || (e.target as HTMLElement).closest('textarea')) return;
     onFront(note.id);
     const startX = e.clientX, startY = e.clientY, ox = note.x, oy = note.y;
+    let lastX = ox, lastY = oy;
     function move(ev: PointerEvent) {
-      onChange({ x: Math.max(0, ox + ev.clientX - startX), y: Math.max(0, oy + ev.clientY - startY) });
+      lastX = Math.max(0, ox + ev.clientX - startX);
+      lastY = Math.max(0, oy + ev.clientY - startY);
+      onMove({ x: lastX, y: lastY });
     }
-    function up() { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); }
+    function up() {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      onChange({ x: lastX, y: lastY }); // single API call on drop
+    }
     window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
   }
 
   function startResize(e: React.PointerEvent) {
     e.stopPropagation();
     const startX = e.clientX, startY = e.clientY, ow = note.w, oh = note.h;
+    let lastW = ow, lastH = oh;
     function move(ev: PointerEvent) {
-      onChange({ w: Math.max(150, ow + ev.clientX - startX), h: Math.max(110, oh + ev.clientY - startY) });
+      lastW = Math.max(150, ow + ev.clientX - startX);
+      lastH = Math.max(110, oh + ev.clientY - startY);
+      onMove({ w: lastW, h: lastH });
     }
-    function up() { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); }
+    function up() {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      onChange({ w: lastW, h: lastH }); // single API call on release
+    }
     window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
+  }
+
+  function enterEdit() {
+    setDraftBody(note.body);
+    setEditing(true);
+  }
+
+  function saveEdit() {
+    onChange({ body: draftBody });
+    setEditing(false);
+  }
+
+  function cancelEdit() {
+    setEditing(false);
   }
 
   return (
@@ -56,20 +86,34 @@ function StickyCard({ note, onChange, onDelete, onFront }: StickyCardProps) {
           ))}
         </div>
         <div className="spacer" />
-        <button className="sticky-act sticky-iconbtn" title={editing ? 'Done' : 'Edit'} onClick={() => setEditing(e => !e)}>
-          <Icon name={editing ? 'eye' : 'edit'} size={14} />
-        </button>
+        {editing ? (
+          <>
+            <button className="sticky-act sticky-iconbtn" title="Save (Enter)" onMouseDown={e => { e.preventDefault(); saveEdit(); }}>
+              <Icon name="check" size={14} />
+            </button>
+            <button className="sticky-act sticky-iconbtn" title="Cancel (Esc)" onMouseDown={e => { e.preventDefault(); cancelEdit(); }}>
+              <Icon name="x" size={14} />
+            </button>
+          </>
+        ) : (
+          <button className="sticky-act sticky-iconbtn" title="Edit" onClick={enterEdit}>
+            <Icon name="edit" size={14} />
+          </button>
+        )}
         <button className="sticky-act sticky-iconbtn" title="Delete" onClick={() => onDelete(note.id)}>
           <Icon name="trash" size={14} />
         </button>
       </div>
       {editing ? (
-        <textarea className="sticky-edit" autoFocus value={note.body}
+        <textarea className="sticky-edit" autoFocus value={draftBody}
           placeholder="Markdown…"
-          onChange={e => onChange({ body: e.target.value })}
-          onBlur={() => setEditing(false)} />
+          onChange={e => setDraftBody(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === 'Escape') cancelEdit();
+            if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) saveEdit();
+          }} />
       ) : (
-        <div className="sticky-body md" onDoubleClick={() => setEditing(true)}
+        <div className="sticky-body md" onDoubleClick={enterEdit}
           dangerouslySetInnerHTML={{ __html: renderMarkdown(note.body || '_Empty — double-click to edit_') }} />
       )}
       <div className="sticky-resize sticky-act" onPointerDown={startResize} />
@@ -97,6 +141,10 @@ export function Stickies() {
     setStickies(list => list.map(n => n.id === id ? { ...n, ...p } : n));
     api.stickies.update(id, p).catch(() => {});
   }
+  // state-only update — no API call, used during drag/resize moves
+  function patchLocal(id: string, p: Partial<Sticky>) {
+    setStickies(list => list.map(n => n.id === id ? { ...n, ...p } : n));
+  }
   function del(id: string) {
     setStickies(list => list.filter(n => n.id !== id));
     api.stickies.remove(id).catch(() => {});
@@ -113,10 +161,12 @@ export function Stickies() {
         <button className="btn btn-primary" onClick={add}><Icon name="plus" size={17} /> New note</button>
       </div>
       <div className="sticky-board">
-        <div className="sticky-board-hint faint">Drag to move · drag corner to resize · double-click to edit</div>
+        <div className="sticky-board-hint faint">Drag to move · drag corner to resize · double-click or pencil to edit</div>
         {stickies.map(n => (
           <StickyCard key={n.id} note={n}
-            onChange={p => patch(n.id, p)} onDelete={del} onFront={front} />
+            onChange={p => patch(n.id, p)}
+            onMove={p => patchLocal(n.id, p)}
+            onDelete={del} onFront={front} />
         ))}
         <div className="sticky-remind-dock">
           <RemindStrip text={allText} source="Sticky" />
