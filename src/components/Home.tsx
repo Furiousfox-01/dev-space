@@ -60,7 +60,7 @@ export function Home() {
           <div className="row" style={{ marginBottom: 12 }}>
             <h3 className="t-h3">Recent</h3>
           </div>
-          <div className="recent-list card">
+          <div className="recent-list">
             {recents.length === 0 && <div className="empty"><div className="big">Nothing yet</div>Create your first note.</div>}
             {recents.map(r => {
               const icon = r.kind === 'docs' ? 'doc' : 'sheet';
@@ -82,7 +82,7 @@ export function Home() {
             <span className="spacer" />
             <button className="btn btn-ghost" onClick={() => go('remind')} style={{ fontSize: 13 }}>View all</button>
           </div>
-          <div className="recent-list card">
+          <div className="recent-list">
             {upcoming.length === 0 && <div className="empty"><div className="big">All clear</div>No reminders set.</div>}
             {upcoming.map(r => (
               <div className="recent-item" key={r.id} style={{ cursor: 'default' }}>

@@ -49,48 +49,101 @@ function SheetsList() {
   );
 }
 
+type SheetDraft = { title: string; cols: string[]; rows: string[][]; color: string };
+
 function SheetEditor({ id }: { id: string }) {
   const { sheets, setSheets, go } = useNA();
   const sheet = sheets.find(s => s.id === id);
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState<SheetDraft | null>(null);
   const [showMd, setShowMd] = useState(false);
+
   if (!sheet) return <div className="na-pad"><div className="empty">Sheet not found.</div></div>;
 
-  function patch(p: Partial<Sheet>) {
-    const updated = Date.now();
-    setSheets(list => list.map(s => s.id === id ? { ...s, ...p, updated } : s));
-    api.sheets.update(id, { ...p, updated }).catch(() => {});
+  const data = editing && draft ? draft : sheet;
+
+  function enterEdit() {
+    setDraft({ title: sheet!.title, cols: sheet!.cols.slice(), rows: sheet!.rows.map(r => r.slice()), color: sheet!.color });
+    setEditing(true);
   }
-  function setCell(r: number, c: number, v: string) { const rows = sheet!.rows.map(row => row.slice()); rows[r][c] = v; patch({ rows }); }
-  function setCol(c: number, v: string) { const cols = sheet!.cols.slice(); cols[c] = v; patch({ cols }); }
-  function addRow() { patch({ rows: [...sheet!.rows, sheet!.cols.map(() => '')] }); }
-  function addCol() { patch({ cols: [...sheet!.cols, 'Column ' + String.fromCharCode(65 + sheet!.cols.length)], rows: sheet!.rows.map(r => [...r, '']) }); }
-  function delRow(r: number) { patch({ rows: sheet!.rows.filter((_, i) => i !== r) }); }
-  function delCol(c: number) { patch({ cols: sheet!.cols.filter((_, i) => i !== c), rows: sheet!.rows.map(r => r.filter((_, i) => i !== c)) }); }
-  function del() { setSheets(list => list.filter(s => s.id !== id)); api.sheets.remove(id).catch(() => {}); go('sheets'); }
+
+  function save() {
+    if (!draft) return;
+    const updated = Date.now();
+    setSheets(list => list.map(s => s.id === id ? { ...s, ...draft, updated } : s));
+    api.sheets.update(id, { ...draft, updated }).catch(() => {});
+    setEditing(false);
+    setDraft(null);
+  }
+
+  function exitEdit() { setEditing(false); setDraft(null); }
+
+  function del() {
+    setSheets(list => list.filter(s => s.id !== id));
+    api.sheets.remove(id).catch(() => {});
+    go('sheets');
+  }
+
+  function setCell(r: number, c: number, v: string) {
+    setDraft(d => { if (!d) return d; const rows = d.rows.map(row => row.slice()); rows[r][c] = v; return { ...d, rows }; });
+  }
+  function setCol(c: number, v: string) {
+    setDraft(d => { if (!d) return d; const cols = d.cols.slice(); cols[c] = v; return { ...d, cols }; });
+  }
+  function addRow() {
+    setDraft(d => { if (!d) return d; return { ...d, rows: [...d.rows, d.cols.map(() => '')] }; });
+  }
+  function addCol() {
+    setDraft(d => { if (!d) return d; return { ...d, cols: [...d.cols, 'Column ' + String.fromCharCode(65 + d.cols.length)], rows: d.rows.map(r => [...r, '']) }; });
+  }
+  function delRow(r: number) {
+    setDraft(d => { if (!d) return d; return { ...d, rows: d.rows.filter((_, i) => i !== r) }; });
+  }
+  function delCol(c: number) {
+    setDraft(d => { if (!d) return d; return { ...d, cols: d.cols.filter((_, i) => i !== c), rows: d.rows.map(r => r.filter((_, i) => i !== c)) }; });
+  }
 
   return (
     <div className="na-pad">
       <div className="row" style={{ marginBottom: 16 }}>
         <button className="btn btn-ghost" onClick={() => go('sheets')}><Icon name="chevronLeft" size={18} /> Sheets</button>
         <span className="spacer" />
-        <ColorPicker value={sheet.color} onChange={c => patch({ color: c })} />
-        <button className="btn btn-outline" onClick={() => setShowMd(v => !v)}>
-          <Icon name="table" size={16} /> {showMd ? 'Grid' : 'Markdown'}
-        </button>
-        <button className="btn btn-ghost btn-danger btn-icon" title="Delete" onClick={del}><Icon name="trash" size={18} /></button>
+        {editing ? (
+          <>
+            <ColorPicker value={draft!.color} onChange={c => setDraft(d => d ? { ...d, color: c } : d)} />
+            <button className="btn btn-outline" onClick={() => setShowMd(v => !v)}>
+              <Icon name="table" size={16} /> {showMd ? 'Grid' : 'Markdown'}
+            </button>
+            <button className="btn btn-ghost" onClick={exitEdit}>Cancel</button>
+            <button className="btn btn-primary" onClick={save}><Icon name="check" size={16} /> Save</button>
+          </>
+        ) : (
+          <>
+            <button className="btn btn-outline" onClick={enterEdit}><Icon name="edit" size={16} /> Edit</button>
+            <button className="btn btn-ghost btn-danger btn-icon" title="Delete" onClick={del}><Icon name="trash" size={18} /></button>
+          </>
+        )}
       </div>
-      <input className="doc-title-input" value={sheet.title} placeholder="Untitled sheet"
-        onChange={e => patch({ title: e.target.value })} />
-      <div style={{ height: 18 }} />
-      {showMd ? (
-        <pre className="md-source">{toMarkdownTable(sheet.cols, sheet.rows)}</pre>
+
+      {editing ? (
+        <input className="doc-title-input" value={draft!.title} placeholder="Untitled sheet"
+          onChange={e => setDraft(d => d ? { ...d, title: e.target.value } : d)}
+          onKeyDown={e => { if (e.key === 'Escape') exitEdit(); }} />
       ) : (
+        <h1 className="doc-view-title">{sheet.title || 'Untitled'}</h1>
+      )}
+
+      <div style={{ height: 18 }} />
+
+      {showMd && editing ? (
+        <pre className="md-source">{toMarkdownTable(data.cols, data.rows)}</pre>
+      ) : editing ? (
         <div className="sheet-wrap">
           <table className="sheet">
             <thead>
               <tr>
                 <th className="sheet-corner" />
-                {sheet.cols.map((c, ci) => (
+                {draft!.cols.map((c, ci) => (
                   <th key={ci}>
                     <div className="sheet-colhead">
                       <input value={c} onChange={e => setCol(ci, e.target.value)} />
@@ -102,13 +155,13 @@ function SheetEditor({ id }: { id: string }) {
               </tr>
             </thead>
             <tbody>
-              {sheet.rows.map((row, ri) => (
+              {draft!.rows.map((row, ri) => (
                 <tr key={ri}>
                   <td className="sheet-rownum">
                     <span>{ri + 1}</span>
                     <button className="sheet-del" title="Delete row" onClick={() => delRow(ri)}><Icon name="x" size={12} /></button>
                   </td>
-                  {sheet.cols.map((_, ci) => (
+                  {draft!.cols.map((_, ci) => (
                     <td key={ci}><input value={row[ci] ?? ''} onChange={e => setCell(ri, ci, e.target.value)} /></td>
                   ))}
                   <td />
@@ -116,8 +169,31 @@ function SheetEditor({ id }: { id: string }) {
               ))}
               <tr>
                 <td className="sheet-add"><button onClick={addRow} title="Add row"><Icon name="plus" size={15} /></button></td>
-                <td colSpan={sheet.cols.length + 1} className="faint" style={{ paddingLeft: 12, fontSize: 13 }}>Add row</td>
+                <td colSpan={draft!.cols.length + 1} className="faint" style={{ paddingLeft: 12, fontSize: 13 }}>Add row</td>
               </tr>
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="sheet-wrap">
+          <table className="sheet">
+            <thead>
+              <tr>
+                <th className="sheet-corner" />
+                {sheet.cols.map((c, ci) => (
+                  <th key={ci}><div className="sheet-cell-view sheet-head-view">{c}</div></th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sheet.rows.map((row, ri) => (
+                <tr key={ri}>
+                  <td className="sheet-rownum"><span>{ri + 1}</span></td>
+                  {sheet.cols.map((_, ci) => (
+                    <td key={ci}><div className="sheet-cell-view">{row[ci] ?? ''}</div></td>
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

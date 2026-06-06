@@ -22,6 +22,7 @@ interface StickyCardProps {
 
 function StickyCard({ note, onChange, onDelete, onFront }: StickyCardProps) {
   const [editing, setEditing] = useState(false);
+  const [draftBody, setDraftBody] = useState('');
 
   function startDrag(e: React.PointerEvent) {
     if (editing) return;
@@ -45,6 +46,20 @@ function StickyCard({ note, onChange, onDelete, onFront }: StickyCardProps) {
     window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
   }
 
+  function enterEdit() {
+    setDraftBody(note.body);
+    setEditing(true);
+  }
+
+  function saveEdit() {
+    onChange({ body: draftBody });
+    setEditing(false);
+  }
+
+  function cancelEdit() {
+    setEditing(false);
+  }
+
   return (
     <div className="sticky" onPointerDown={startDrag}
       style={{ left: note.x, top: note.y, width: note.w, height: note.h, background: STICKY_TINT[note.color] || STICKY_TINT.yellow, zIndex: note.z || 1 }}>
@@ -56,20 +71,34 @@ function StickyCard({ note, onChange, onDelete, onFront }: StickyCardProps) {
           ))}
         </div>
         <div className="spacer" />
-        <button className="sticky-act sticky-iconbtn" title={editing ? 'Done' : 'Edit'} onClick={() => setEditing(e => !e)}>
-          <Icon name={editing ? 'eye' : 'edit'} size={14} />
-        </button>
+        {editing ? (
+          <>
+            <button className="sticky-act sticky-iconbtn" title="Save (Enter)" onMouseDown={e => { e.preventDefault(); saveEdit(); }}>
+              <Icon name="check" size={14} />
+            </button>
+            <button className="sticky-act sticky-iconbtn" title="Cancel (Esc)" onMouseDown={e => { e.preventDefault(); cancelEdit(); }}>
+              <Icon name="x" size={14} />
+            </button>
+          </>
+        ) : (
+          <button className="sticky-act sticky-iconbtn" title="Edit" onClick={enterEdit}>
+            <Icon name="edit" size={14} />
+          </button>
+        )}
         <button className="sticky-act sticky-iconbtn" title="Delete" onClick={() => onDelete(note.id)}>
           <Icon name="trash" size={14} />
         </button>
       </div>
       {editing ? (
-        <textarea className="sticky-edit" autoFocus value={note.body}
+        <textarea className="sticky-edit" autoFocus value={draftBody}
           placeholder="Markdown…"
-          onChange={e => onChange({ body: e.target.value })}
-          onBlur={() => setEditing(false)} />
+          onChange={e => setDraftBody(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === 'Escape') cancelEdit();
+            if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) saveEdit();
+          }} />
       ) : (
-        <div className="sticky-body md" onDoubleClick={() => setEditing(true)}
+        <div className="sticky-body md" onDoubleClick={enterEdit}
           dangerouslySetInnerHTML={{ __html: renderMarkdown(note.body || '_Empty — double-click to edit_') }} />
       )}
       <div className="sticky-resize sticky-act" onPointerDown={startResize} />
@@ -113,7 +142,7 @@ export function Stickies() {
         <button className="btn btn-primary" onClick={add}><Icon name="plus" size={17} /> New note</button>
       </div>
       <div className="sticky-board">
-        <div className="sticky-board-hint faint">Drag to move · drag corner to resize · double-click to edit</div>
+        <div className="sticky-board-hint faint">Drag to move · drag corner to resize · double-click or pencil to edit</div>
         {stickies.map(n => (
           <StickyCard key={n.id} note={n}
             onChange={p => patch(n.id, p)} onDelete={del} onFront={front} />

@@ -107,14 +107,14 @@ export function Remind() {
       <Composer />
       <div style={{ height: 26 }} />
       <div className="row" style={{ marginBottom: 10 }}><h3 className="t-h3">Upcoming</h3></div>
-      <div className="reminder-list card">
+      <div className="reminder-list">
         {active.length === 0 && <div className="empty"><div className="big">All clear</div>Nothing scheduled.</div>}
         {active.map(r => <ReminderRow key={r.id} r={r} />)}
       </div>
       {done.length > 0 && (
         <>
           <div className="row" style={{ margin: '24px 0 10px' }}><h3 className="t-h3 faint">Done</h3></div>
-          <div className="reminder-list card" style={{ opacity: .75 }}>
+          <div className="reminder-list" style={{ opacity: .65 }}>
             {done.map(r => <ReminderRow key={r.id} r={r} />)}
           </div>
         </>
