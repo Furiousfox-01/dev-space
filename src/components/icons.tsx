@@ -1,7 +1,8 @@
 export type IconName =
   | 'doc' | 'sheet' | 'sticky' | 'bell' | 'home' | 'plus' | 'search' | 'trash'
   | 'check' | 'clock' | 'more' | 'x' | 'chevronLeft' | 'drag' | 'eye' | 'edit'
-  | 'bold' | 'italic' | 'h1' | 'list' | 'quote' | 'link' | 'table' | 'sun' | 'moon' | 'repeat';
+  | 'bold' | 'italic' | 'h1' | 'list' | 'quote' | 'link' | 'table' | 'sun' | 'moon' | 'repeat'
+  | 'settings';
 
 const PATHS: Record<IconName, React.ReactNode> = {
   doc: <><path d="M7 3.5h6.5L18 8v12.5H7z"/><path d="M13 3.5V8h5"/><path d="M9.5 12.5h6M9.5 16h4"/></>,
@@ -30,6 +31,7 @@ const PATHS: Record<IconName, React.ReactNode> = {
   sun: <><circle cx="12" cy="12" r="3.5"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6 18 18M18 6l-1.4 1.4M7.4 16.6 6 18"/></>,
   moon: <path d="M20 14.5A8 8 0 0 1 9.5 4a6.5 6.5 0 1 0 10.5 10.5z"/>,
   repeat: <><path d="M5 9a5 5 0 0 1 5-4h6l-2-2M19 15a5 5 0 0 1-5 4H8l2 2"/></>,
+  settings: <><circle cx="12" cy="12" r="2.8"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></>,
 };
 
 interface IconProps {

@@ -7,6 +7,7 @@ import { Docs } from './Docs';
 import { Sheets } from './Sheets';
 import { Stickies } from './Stickies';
 import { Remind } from './Remind';
+import { Settings } from './Settings';
 
 function Toasts() {
   const { toasts, dismissToast } = useNA();
@@ -31,7 +32,7 @@ function Toasts() {
 }
 
 function Sidebar({ onNav }: { onNav?: () => void }) {
-  const { route, go, reminders, theme, toggleTheme } = useNA();
+  const { route, go, reminders } = useNA();
   const due = reminders.filter(r => r.enabled).length;
   const items = [{ key: 'home', label: 'Home', icon: 'home' as const }, ...TOOLS];
   return (
@@ -51,25 +52,18 @@ function Sidebar({ onNav }: { onNav?: () => void }) {
         ))}
       </nav>
       <div className="na-side-foot">
-        <div className="row" style={{ gap: 9 }}>
-          <span className="avatar">A</span>
-          <div style={{ lineHeight: 1.2 }}>
-            <div style={{ fontSize: 13.5, fontWeight: 700 }}>Alex Rivera</div>
-            <div className="faint" style={{ fontSize: 12 }}>Free plan</div>
-          </div>
-          <button className="btn btn-ghost btn-icon theme-toggle" style={{ marginLeft: 'auto' }}
-            onClick={toggleTheme} title={theme === 'dark' ? 'Switch to light' : 'Switch to dark'}
-            aria-label="Toggle theme">
-            <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={18} />
-          </button>
-        </div>
+        <button className={'na-navitem' + (route.name === 'settings' ? ' active' : '')}
+          onClick={() => { go('settings'); onNav?.(); }}>
+          <Icon name="settings" size={19} />
+          Settings
+        </button>
       </div>
     </aside>
   );
 }
 
 const TITLES: Record<string, string> = {
-  home: 'Home', docs: 'Docs', sheets: 'Sheets', stickies: 'Sticky Notes', remind: 'Remind',
+  home: 'Home', docs: 'Docs', sheets: 'Sheets', stickies: 'Sticky Notes', remind: 'Remind', settings: 'Settings',
 };
 
 function Routed() {
@@ -79,6 +73,7 @@ function Routed() {
     case 'docs':     return <Docs id={route.id} />;
     case 'sheets':   return <Sheets id={route.id} />;
     case 'remind':   return <Remind />;
+    case 'settings': return <Settings />;
     default:         return <Home />;
   }
 }

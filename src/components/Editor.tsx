@@ -95,6 +95,14 @@ export function MarkdownEditor({
 
   useEffect(() => { if (autoFocus && ref.current) ref.current.focus(); }, [autoFocus]);
 
+  // auto-grow textarea with content
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.height = 'auto';
+    el.style.height = Math.max(minHeight, el.scrollHeight) + 'px';
+  }, [value, minHeight]);
+
   return (
     <div>
       {toolbar && (
@@ -110,7 +118,7 @@ export function MarkdownEditor({
       <textarea ref={ref} className="field mono-edit" value={value} placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => { if (e.key === 'Escape') onEsc?.(); }}
-        style={{ minHeight, resize: 'vertical', lineHeight: 1.7, fontSize: 15.5 }} />
+        style={{ minHeight, resize: 'none', lineHeight: 1.7, fontSize: 15.5, overflow: 'hidden' }} />
       <RemindStrip text={value} source={source} />
     </div>
   );
