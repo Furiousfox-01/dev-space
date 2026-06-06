@@ -149,7 +149,13 @@ export function Stickies() {
     setStickies(list => list.filter(n => n.id !== id));
     api.stickies.remove(id).catch(() => {});
   }
-  function front(id: string) { topZ.current += 1; patch(id, { z: topZ.current }); }
+  function front(id: string) {
+    const maxZ = stickies.reduce((m, n) => Math.max(m, n.z || 1), 0);
+    const note = stickies.find(n => n.id === id);
+    if (note && (note.z || 1) >= maxZ) return; // already on top, no API call
+    topZ.current = maxZ + 1;
+    patch(id, { z: topZ.current });
+  }
 
   const allText = stickies.map(s => s.body).join('\n');
 

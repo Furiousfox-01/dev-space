@@ -114,8 +114,8 @@
 .doc-tile-meta { font-size: 11px; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); }
 
 .doc-title-input {
-  width: 100%; border: none; background: none; outline: none; font-family: var(--font-ui);
-  font-size: 28px; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase;
+  width: 100%; border: none; background: none; outline: none; font-family: var(--font-hand);
+  font-size: 28px; font-weight: 900; letter-spacing: -0.02em;
   color: var(--ink); padding: 0; border-bottom: 2px solid var(--ink);
 }
 .doc-title-input::placeholder { color: var(--ink-3); }
@@ -129,8 +129,8 @@
 
 /* ---------- Doc view mode ---------- */
 .doc-view-title {
-  font-family: var(--font-ui); font-size: 32px; font-weight: 900;
-  letter-spacing: -0.02em; text-transform: uppercase; color: var(--ink);
+  font-family: var(--font-hand); font-size: 32px; font-weight: 900;
+  letter-spacing: -0.02em; color: var(--ink);
   margin: 0 0 20px; padding-bottom: 14px; border-bottom: 1px solid var(--surface-2);
 }
 .doc-view-body { padding-top: 4px; }
@@ -184,9 +184,9 @@
 .na-main-inner { display: flex; flex-direction: column; flex: 1; min-height: 0; }
 .sticky-board {
   position: relative; flex: 1; overflow: auto;
-  background-color: var(--paper-2);
-  background-image: radial-gradient(rgba(0,0,0,0.25) 1.2px, transparent 1.2px);
-  background-size: 22px 22px; background-position: -1px -1px;
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(0,0,0,0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 .sticky-board-hint {
   position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
@@ -278,6 +278,31 @@
   text-transform: uppercase; letter-spacing: 0.02em;
 }
 .rem-meta { font-family: var(--font-mono); font-size: 11px; margin-top: 1px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ---------- Settings ---------- */
+.settings-section { margin-bottom: 40px; }
+.settings-section h2 { margin: 0 0 18px; }
+.theme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+.theme-swatch {
+  border: 2px solid var(--ink); cursor: pointer; background: none; padding: 0; text-align: left;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.theme-swatch:hover { box-shadow: 5px 5px 0 var(--ink); transform: translate(-1px,-1px); }
+.theme-swatch.active { box-shadow: 6px 6px 0 var(--ink); outline: 3px solid var(--brand); outline-offset: 2px; }
+.theme-preview {
+  height: 100px; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: 6px; padding: 10px;
+}
+.theme-preview-bar {
+  height: 10px; width: 60%; border-radius: 2px; opacity: 0.9;
+}
+.theme-preview-card {
+  flex: 1; border-radius: 2px; border: 1.5px solid;
+}
+.theme-info { padding: 10px 12px; border-top: 2px solid var(--ink); background: var(--surface); }
+.theme-name { font-size: 13px; font-weight: 900; color: var(--ink); text-transform: uppercase; letter-spacing: 0.04em; }
+.theme-desc { font-size: 11px; color: var(--ink-3); font-family: var(--font-mono); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.06em; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 920px) {
