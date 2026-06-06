@@ -17,19 +17,19 @@
   /* ============================================================
      COLOR — BlockFrame Candy Palette
      ============================================================ */
-  --paper:        #FFFDF5;  /* offwhite ground */
-  --paper-2:      #FFDC8B;  /* cream — sticky board / canvas ground */
+  --paper:        #F8F6EF;  /* offwhite ground */
+  --paper-2:      #FFE4A0;  /* cream — sticky board / canvas ground */
   --surface:      #FFFFFF;  /* card / panel fills */
-  --surface-2:    #F5F2EF;  /* subtle raised surface */
+  --surface-2:    #F0EDE7;  /* subtle raised surface */
 
-  --ink:          #000000;  /* all borders + primary text */
-  --ink-2:        #333333;  /* secondary text */
-  --ink-3:        #666666;  /* tertiary / placeholder */
-  --ink-inverse:  #FFFFFF;  /* text on black surfaces */
+  --ink:          #1A1A1A;  /* charcoal — softer than pure black */
+  --ink-2:        #4A4A4A;  /* secondary text */
+  --ink-3:        #909090;  /* tertiary / placeholder */
+  --ink-inverse:  #FFFFFF;  /* text on dark surfaces */
 
-  --line:         #000000;  /* all borders are black in BlockFrame */
-  --line-strong:  #000000;
-  --line-ink:     #000000;
+  --line:         #1A1A1A;
+  --line-strong:  #1A1A1A;
+  --line-ink:     #1A1A1A;
 
   /* ============================================================
      COLOR — Brand (yellow = the CTA, pink = accent)
@@ -83,12 +83,12 @@
      ELEVATION — hard offset shadows, solid black, zero blur
      4px/8px primary coupling; 3px/4px chrome coupling.
      ============================================================ */
-  --shadow-sm:    4px 4px 0 #000000;   /* chrome / small cards */
-  --shadow-md:    8px 8px 0 #000000;   /* primary cards */
-  --shadow-lg:    12px 12px 0 #000000; /* menus / toasts */
-  --shadow-pop:   8px 8px 0 #000000;
-  --ring:         0 0 0 4px #000000;
-  --ring-strong:  0 0 0 4px #000000;
+  --shadow-sm:    3px 3px 0 #1A1A1A;   /* chrome / small cards */
+  --shadow-md:    5px 5px 0 #1A1A1A;   /* primary cards */
+  --shadow-lg:    8px 8px 0 #1A1A1A;   /* menus / toasts */
+  --shadow-pop:   5px 5px 0 #1A1A1A;
+  --ring:         0 0 0 3px #1A1A1A;
+  --ring-strong:  0 0 0 3px #1A1A1A;
   --focus-ring:   0 0 0 3px #F7CB46;   /* yellow focus ring */
 
   /* ============================================================
@@ -160,37 +160,37 @@
    BlockFrame close-frame aesthetic.
    ============================================================ */
 [data-theme="dark"] {
-  --paper:        #000000;
-  --paper-2:      #111111;
-  --surface:      #1A1A1A;
-  --surface-2:    #242424;
+  --paper:        #111110;
+  --paper-2:      #1A1A18;
+  --surface:      #1C1C1A;
+  --surface-2:    #252523;
 
-  --ink:          #FFFFFF;
-  --ink-2:        #CCCCCC;
-  --ink-3:        #888888;
-  --ink-inverse:  #000000;
+  --ink:          #EBEBEB;
+  --ink-2:        #ADADAD;
+  --ink-3:        #6A6A6A;
+  --ink-inverse:  #111110;
 
-  --line:         #FFFFFF;
-  --line-strong:  #FFFFFF;
-  --line-ink:     #FFFFFF;
+  --line:         #EBEBEB;
+  --line-strong:  #EBEBEB;
+  --line-ink:     #EBEBEB;
 
   --brand:        #F7CB46;
   --brand-hover:  #FFD966;
   --brand-press:  #FFE080;
-  --brand-tint:   #3A3000;
+  --brand-tint:   #2E2500;
 
   --accent:       #FE90E8;
-  --accent-soft:  #4A1040;
+  --accent-soft:  #3A0D30;
 
-  --inverse-surface: #FFFFFF;
-  --inverse-ink:     #000000;
-  --banner-bg:       #2A2000;
+  --inverse-surface: #EBEBEB;
+  --inverse-ink:     #111110;
+  --banner-bg:       #252000;
   --banner-ink:      #F7CB46;
-  --banner-line:     #FFFFFF;
+  --banner-line:     #EBEBEB;
 
-  --shadow-sm:    4px 4px 0 #FFFFFF;
-  --shadow-md:    8px 8px 0 #FFFFFF;
-  --shadow-lg:    12px 12px 0 #F7CB46;
-  --shadow-pop:   8px 8px 0 #FFFFFF;
+  --shadow-sm:    3px 3px 0 #EBEBEB;
+  --shadow-md:    5px 5px 0 #EBEBEB;
+  --shadow-lg:    8px 8px 0 #F7CB46;
+  --shadow-pop:   5px 5px 0 #EBEBEB;
   --focus-ring:   0 0 0 3px #F7CB46;
 }

@@ -23,11 +23,11 @@ button { font-family: inherit; cursor: pointer; }
 /* ---------- Sidebar ---------- */
 .na-side {
   width: 248px; flex: none; background: var(--surface);
-  border-right: 4px solid var(--ink);
+  border-right: 2px solid var(--ink);
   display: flex; flex-direction: column; padding: 14px 12px; gap: 4px;
 }
 .na-brand { display: flex; align-items: center; gap: 9px; padding: 6px 8px 14px;
-  border-bottom: 4px solid var(--ink); margin-bottom: 8px; }
+  border-bottom: 2px solid var(--ink); margin-bottom: 8px; }
 .na-brand img { width: 30px; height: 30px; }
 .na-brand .wm {
   font-family: var(--font-ui); font-size: 22px; font-weight: 900;
@@ -36,7 +36,7 @@ button { font-family: inherit; cursor: pointer; }
 .na-nav { display: flex; flex-direction: column; gap: 4px; }
 .na-navitem {
   display: flex; align-items: center; gap: 11px; padding: 9px 10px;
-  border-radius: 0; border: 3px solid transparent; background: none; cursor: pointer;
+  border-radius: 0; border: 2px solid transparent; background: none; cursor: pointer;
   color: var(--ink-2); font-size: 13px; font-weight: 700; text-align: left; width: 100%;
   text-transform: uppercase; letter-spacing: 0.04em;
   transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
@@ -47,13 +47,13 @@ button { font-family: inherit; cursor: pointer; }
   box-shadow: var(--shadow-sm);
 }
 .na-navitem .dot { width: 8px; height: 8px; background: var(--ink); margin-left: auto; }
-.na-side-foot { margin-top: auto; padding: 10px 8px 2px; border-top: 4px solid var(--ink); }
+.na-side-foot { margin-top: auto; padding: 10px 8px 2px; border-top: 2px solid var(--ink); }
 
 /* ---------- Main column ---------- */
 .na-main { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
 .na-topbar {
   height: 58px; flex: none; display: flex; align-items: center; gap: 12px;
-  padding: 0 22px; border-bottom: 4px solid var(--ink); background: var(--paper);
+  padding: 0 22px; border-bottom: 2px solid var(--ink); background: var(--paper);
 }
 .na-topbar .title {
   font-size: 16px; font-weight: 900; letter-spacing: -0.02em;
@@ -66,13 +66,13 @@ button { font-family: inherit; cursor: pointer; }
 .btn {
   display: inline-flex; align-items: center; gap: 7px;
   font-size: 13px; font-weight: 700; border-radius: 0;
-  padding: 10px 16px; border: 3px solid var(--ink); line-height: 1;
+  padding: 10px 16px; border: 2px solid var(--ink); line-height: 1;
   white-space: nowrap; text-transform: uppercase; letter-spacing: 0.05em;
   transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
   box-shadow: var(--shadow-sm); background: var(--surface); color: var(--ink);
 }
-.btn:hover { box-shadow: 6px 6px 0 var(--ink); transform: translate(-1px, -1px); }
-.btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+.btn:hover { box-shadow: 4px 4px 0 var(--ink); transform: translate(-1px, -1px); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink); }
 .btn-primary { background: var(--brand); color: var(--ink); }
 .btn-primary:hover { background: var(--brand-hover); }
 .btn-ghost { background: transparent; border-color: transparent; box-shadow: none; color: var(--ink-2); }
@@ -94,19 +94,19 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ---------- Cards ---------- */
 .card {
-  background: var(--surface); border: 4px solid var(--ink);
+  background: var(--surface); border: 2px solid var(--ink);
   border-radius: 0; box-shadow: var(--shadow-md);
   transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 .card.hover:hover {
-  box-shadow: 12px 12px 0 var(--ink);
+  box-shadow: 7px 7px 0 var(--ink);
   transform: translate(-2px, -2px);
 }
 
 /* ---------- Inputs ---------- */
 .field {
   width: 100%; font-family: var(--font-mono); font-size: 14px; color: var(--ink);
-  background: var(--surface); border: 3px solid var(--ink); border-radius: 0;
+  background: var(--surface); border: 2px solid var(--ink); border-radius: 0;
   padding: 10px 12px; outline: none;
   transition: box-shadow var(--dur-fast);
 }

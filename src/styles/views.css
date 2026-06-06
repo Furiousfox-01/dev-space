@@ -55,11 +55,11 @@
 .toolcard {
   display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 18px;
   text-align: left; cursor: pointer;
-  border: 4px solid var(--ink) !important; box-shadow: var(--shadow-md) !important;
+  border: 2px solid var(--ink) !important; box-shadow: var(--shadow-md) !important;
   transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 .toolcard:hover {
-  box-shadow: 12px 12px 0 var(--ink) !important;
+  box-shadow: 7px 7px 0 var(--ink) !important;
   transform: translate(-2px, -2px);
 }
 .toolcard-ic {
@@ -95,11 +95,11 @@
   display: flex; flex-direction: column; align-items: flex-start; gap: 7px;
   padding: 16px 16px 14px; cursor: pointer; text-align: left;
   min-height: 132px; position: relative; overflow: hidden;
-  border: 4px solid var(--ink) !important; box-shadow: var(--shadow-md) !important;
+  border: 2px solid var(--ink) !important; box-shadow: var(--shadow-md) !important;
   transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 .doc-tile:hover {
-  box-shadow: 12px 12px 0 var(--ink) !important;
+  box-shadow: 7px 7px 0 var(--ink) !important;
   transform: translate(-2px, -2px);
 }
 .doc-tile-bar { position: absolute; top: 0; left: 0; right: 0; height: 6px; }
@@ -115,7 +115,7 @@
 .doc-title-input {
   width: 100%; border: none; background: none; outline: none; font-family: var(--font-ui);
   font-size: 28px; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase;
-  color: var(--ink); padding: 0; border-bottom: 4px solid var(--ink);
+  color: var(--ink); padding: 0; border-bottom: 2px solid var(--ink);
 }
 .doc-title-input::placeholder { color: var(--ink-3); }
 
@@ -128,11 +128,11 @@
 
 /* ---------- Sheets ---------- */
 .sheet-wrap {
-  overflow: auto; border: 4px solid var(--ink); background: var(--surface);
+  overflow: auto; border: 2px solid var(--ink); background: var(--surface);
   box-shadow: var(--shadow-md);
 }
 .sheet { border-collapse: collapse; width: 100%; }
-.sheet th, .sheet td { border: 2px solid var(--ink); padding: 0; vertical-align: middle; }
+.sheet th, .sheet td { border: 1px solid var(--ink); padding: 0; vertical-align: middle; }
 .sheet input {
   width: 100%; border: none; background: none; outline: none; padding: 9px 11px;
   font-family: var(--font-mono); font-size: 13px; color: var(--ink);
@@ -172,7 +172,7 @@
 .sticky-board {
   position: relative; flex: 1; overflow: auto;
   background-color: var(--paper-2);
-  background-image: radial-gradient(#000 1.4px, transparent 1.4px);
+  background-image: radial-gradient(rgba(0,0,0,0.25) 1.2px, transparent 1.2px);
   background-size: 22px 22px; background-position: -1px -1px;
 }
 .sticky-board-hint {
@@ -184,12 +184,12 @@
 .sticky {
   position: absolute; border-radius: 0; box-shadow: var(--shadow-md);
   display: flex; flex-direction: column;
-  border: 4px solid var(--ink); touch-action: none;
+  border: 2px solid var(--ink); touch-action: none;
   transition: box-shadow var(--dur-fast) var(--ease);
 }
-.sticky:hover { box-shadow: 12px 12px 0 var(--ink); }
+.sticky:hover { box-shadow: 7px 7px 0 var(--ink); }
 .sticky-bar { display: flex; align-items: center; gap: 4px; padding: 6px 7px; cursor: grab;
-  border-bottom: 3px solid var(--ink); background: rgba(0,0,0,.08); }
+  border-bottom: 2px solid var(--ink); background: rgba(0,0,0,.05); }
 .sticky-bar:active { cursor: grabbing; }
 .sticky-colors { display: flex; gap: 4px; }
 .sticky-cdot {
@@ -235,7 +235,7 @@
   font-family: var(--font-mono); font-size: 12px; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px;
 }
-.composer { padding: 16px; border: 4px solid var(--ink); background: var(--surface); box-shadow: var(--shadow-md); }
+.composer { padding: 16px; border: 2px solid var(--ink); background: var(--surface); box-shadow: var(--shadow-md); }
 .composer-row { display: flex; align-items: center; gap: 12px; }
 .composer-input {
   flex: 1; border: none; outline: none; background: none;
@@ -248,7 +248,7 @@
 .reminder-list { padding: 6px; display: flex; flex-direction: column; gap: 6px; }
 .reminder-row {
   display: flex; align-items: center; gap: 12px; padding: 10px;
-  border: 3px solid var(--ink); background: var(--surface);
+  border: 2px solid var(--ink); background: var(--surface);
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
 }
