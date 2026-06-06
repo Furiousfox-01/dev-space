@@ -15,12 +15,13 @@ const STICKY_TINT: Record<string, string> = {
 
 interface StickyCardProps {
   note: Sticky;
-  onChange: (p: Partial<Sticky>) => void;
+  onChange: (p: Partial<Sticky>) => void;   // state + API save
+  onMove: (p: Partial<Sticky>) => void;     // state only, no API (used during drag)
   onDelete: (id: string) => void;
   onFront: (id: string) => void;
 }
 
-function StickyCard({ note, onChange, onDelete, onFront }: StickyCardProps) {
+function StickyCard({ note, onChange, onMove, onDelete, onFront }: StickyCardProps) {
   const [editing, setEditing] = useState(false);
   const [draftBody, setDraftBody] = useState('');
 
@@ -29,20 +30,34 @@ function StickyCard({ note, onChange, onDelete, onFront }: StickyCardProps) {
     if ((e.target as HTMLElement).closest('.sticky-act') || (e.target as HTMLElement).closest('textarea')) return;
     onFront(note.id);
     const startX = e.clientX, startY = e.clientY, ox = note.x, oy = note.y;
+    let lastX = ox, lastY = oy;
     function move(ev: PointerEvent) {
-      onChange({ x: Math.max(0, ox + ev.clientX - startX), y: Math.max(0, oy + ev.clientY - startY) });
+      lastX = Math.max(0, ox + ev.clientX - startX);
+      lastY = Math.max(0, oy + ev.clientY - startY);
+      onMove({ x: lastX, y: lastY });
     }
-    function up() { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); }
+    function up() {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      onChange({ x: lastX, y: lastY }); // single API call on drop
+    }
     window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
   }
 
   function startResize(e: React.PointerEvent) {
     e.stopPropagation();
     const startX = e.clientX, startY = e.clientY, ow = note.w, oh = note.h;
+    let lastW = ow, lastH = oh;
     function move(ev: PointerEvent) {
-      onChange({ w: Math.max(150, ow + ev.clientX - startX), h: Math.max(110, oh + ev.clientY - startY) });
+      lastW = Math.max(150, ow + ev.clientX - startX);
+      lastH = Math.max(110, oh + ev.clientY - startY);
+      onMove({ w: lastW, h: lastH });
     }
-    function up() { window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); }
+    function up() {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      onChange({ w: lastW, h: lastH }); // single API call on release
+    }
     window.addEventListener('pointermove', move); window.addEventListener('pointerup', up);
   }
 
@@ -126,6 +141,10 @@ export function Stickies() {
     setStickies(list => list.map(n => n.id === id ? { ...n, ...p } : n));
     api.stickies.update(id, p).catch(() => {});
   }
+  // state-only update — no API call, used during drag/resize moves
+  function patchLocal(id: string, p: Partial<Sticky>) {
+    setStickies(list => list.map(n => n.id === id ? { ...n, ...p } : n));
+  }
   function del(id: string) {
     setStickies(list => list.filter(n => n.id !== id));
     api.stickies.remove(id).catch(() => {});
@@ -145,7 +164,9 @@ export function Stickies() {
         <div className="sticky-board-hint faint">Drag to move · drag corner to resize · double-click or pencil to edit</div>
         {stickies.map(n => (
           <StickyCard key={n.id} note={n}
-            onChange={p => patch(n.id, p)} onDelete={del} onFront={front} />
+            onChange={p => patch(n.id, p)}
+            onMove={p => patchLocal(n.id, p)}
+            onDelete={del} onFront={front} />
         ))}
         <div className="sticky-remind-dock">
           <RemindStrip text={allText} source="Sticky" />
