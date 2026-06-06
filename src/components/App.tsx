@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NoteAreaProvider, useNA } from '../store/store';
+import { GravelProvider, useNA } from '../store/store';
 import { Icon, TOOLS } from './icons';
 import { formatWhen } from '../utils/formatWhen';
 import { Home } from './Home';
@@ -39,7 +39,7 @@ function Sidebar({ onNav }: { onNav?: () => void }) {
     <aside className="na-side">
       <div className="na-brand">
         <img src="/mark.svg" alt="" />
-        <span className="wm">NoteArea</span>
+        <span className="wm">Gravel</span>
       </div>
       <nav className="na-nav">
         {items.map(it => (
@@ -104,7 +104,7 @@ function Shell() {
               <button className="btn btn-ghost btn-icon na-menu-btn" onClick={() => setMenu(true)}>
                 <Icon name="more" size={20} />
               </button>
-              <div className="title">{TITLES[route.name] || 'NoteArea'}</div>
+              <div className="title">{TITLES[route.name] || 'Gravel'}</div>
             </div>
             <div className="na-scroll"><Routed /></div>
           </>
@@ -117,8 +117,8 @@ function Shell() {
 
 export function App() {
   return (
-    <NoteAreaProvider>
+    <GravelProvider>
       <Shell />
-    </NoteAreaProvider>
+    </GravelProvider>
   );
 }

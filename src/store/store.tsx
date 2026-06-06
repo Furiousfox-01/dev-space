@@ -16,8 +16,8 @@ function nextTime(h: number, m: number): number {
 
 const SEED = {
   docs: [
-    { id: uid(), title: 'Welcome to NoteArea', color: 'blue', updated: Date.now() - 3600e3,
-      body: '# Welcome 👋\n\n**NoteArea** is one calm, paper-like place for all your thinking. Everything here is **Markdown**.\n\n## Four tools, one home\n- **Docs** — long-form writing, full Markdown\n- **Sheets** — quick Markdown tables\n- **Sticky Notes** — tiny thoughts on a freeform board\n- **Remind** — type `@remind` anywhere\n\n> Tip: write `@remind submit draft tomorrow at 9am` right here and it becomes a reminder.\n\nHappy writing.' },
+    { id: uid(), title: 'Welcome to Gravel', color: 'blue', updated: Date.now() - 3600e3,
+      body: '# Welcome 👋\n\n**Gravel** is one calm, paper-like place for all your thinking. Everything here is **Markdown**.\n\n## Four tools, one home\n- **Docs** — long-form writing, full Markdown\n- **Sheets** — quick Markdown tables\n- **Sticky Notes** — tiny thoughts on a freeform board\n- **Remind** — type `@remind` anywhere\n\n> Tip: write `@remind submit draft tomorrow at 9am` right here and it becomes a reminder.\n\nHappy writing.' },
     { id: uid(), title: 'Project: Spring launch', color: 'green', updated: Date.now() - 86400e3,
       body: '# Spring launch\n\n## Goals\n1. Ship the new home screen\n2. Write the announcement\n3. Line up 3 beta testers\n\n## Notes\nKeep the copy *warm and plain*. No jargon.\n\n- [x] Draft outline\n- [ ] Review with team\n- [ ] @remind publish post friday at 10am' },
   ] as Doc[],
@@ -64,15 +64,15 @@ interface NAContext {
   loading: boolean;
 }
 
-const NoteAreaContext = createContext<NAContext | null>(null);
+const GravelContext = createContext<NAContext | null>(null);
 
 export const useNA = (): NAContext => {
-  const ctx = useContext(NoteAreaContext);
-  if (!ctx) throw new Error('useNA must be used within NoteAreaProvider');
+  const ctx = useContext(GravelContext);
+  if (!ctx) throw new Error('useNA must be used within GravelProvider');
   return ctx;
 };
 
-export function NoteAreaProvider({ children }: { children: ReactNode }) {
+export function GravelProvider({ children }: { children: ReactNode }) {
   const [docs, setDocs] = useState<Doc[]>([]);
   const [sheets, setSheets] = useState<Sheet[]>([]);
   const [stickies, setStickies] = useState<Sticky[]>([]);
@@ -121,7 +121,7 @@ export function NoteAreaProvider({ children }: { children: ReactNode }) {
     pushToast({ label: r.label, source: r.source, when: r.when, repeat: r.repeat });
     try {
       if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
-        new Notification('⏰ ' + r.label, { body: 'NoteArea reminder', silent: false });
+        new Notification('⏰ ' + r.label, { body: 'Gravel reminder', silent: false });
       }
     } catch {}
   }, [pushToast]);
@@ -183,5 +183,5 @@ export function NoteAreaProvider({ children }: { children: ReactNode }) {
     loading,
   };
 
-  return <NoteAreaContext.Provider value={ctx}>{children}</NoteAreaContext.Provider>;
+  return <GravelContext.Provider value={ctx}>{children}</GravelContext.Provider>;
 }
