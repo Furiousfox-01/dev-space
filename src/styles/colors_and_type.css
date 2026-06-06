@@ -10,8 +10,8 @@
 
 :root {
   /* ---- Brand font families ---- */
-  --font-hand:    'Archivo Black', sans-serif;   /* headings + display only */
-  --font-ui:      'Archivo', sans-serif;          /* body, nav, labels */
+  --font-hand:    'Archivo Black', sans-serif;   /* display + headings only */
+  --font-ui:      'Archivo', sans-serif;          /* body, nav, UI labels */
   --font-mono:    'JetBrains Mono', ui-monospace, monospace;
 
   /* ============================================================
