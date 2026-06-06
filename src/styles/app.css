@@ -1,0 +1,223 @@
+/* ============================================================
+   My NoteArea × BlockFrame — app.css
+   Neobrutalist shell: 4px black borders, hard offset shadows,
+   square corners, Archivo Black uppercase, candy pastels.
+   ============================================================ */
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+button { font-family: inherit; cursor: pointer; }
+::selection { background: var(--brand); color: var(--ink); }
+
+/* ---------- App frame ---------- */
+.na-app { display: flex; height: 100%; overflow: hidden; }
+
+/* ---------- Sidebar ---------- */
+.na-side {
+  width: 248px; flex: none; background: var(--surface);
+  border-right: 4px solid var(--ink);
+  display: flex; flex-direction: column; padding: 14px 12px; gap: 4px;
+}
+.na-brand { display: flex; align-items: center; gap: 9px; padding: 6px 8px 14px;
+  border-bottom: 4px solid var(--ink); margin-bottom: 8px; }
+.na-brand img { width: 30px; height: 30px; }
+.na-brand .wm {
+  font-family: var(--font-ui); font-size: 22px; font-weight: 900;
+  color: var(--ink); line-height: 1; text-transform: uppercase; letter-spacing: -0.03em;
+}
+.na-nav { display: flex; flex-direction: column; gap: 4px; }
+.na-navitem {
+  display: flex; align-items: center; gap: 11px; padding: 9px 10px;
+  border-radius: 0; border: 3px solid transparent; background: none; cursor: pointer;
+  color: var(--ink-2); font-size: 13px; font-weight: 700; text-align: left; width: 100%;
+  text-transform: uppercase; letter-spacing: 0.04em;
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+.na-navitem:hover { background: var(--paper); border-color: var(--ink); color: var(--ink); }
+.na-navitem.active {
+  background: var(--brand); border-color: var(--ink); color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.na-navitem .dot { width: 8px; height: 8px; background: var(--ink); margin-left: auto; }
+.na-side-foot { margin-top: auto; padding: 10px 8px 2px; border-top: 4px solid var(--ink); }
+
+/* ---------- Main column ---------- */
+.na-main { flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; }
+.na-topbar {
+  height: 58px; flex: none; display: flex; align-items: center; gap: 12px;
+  padding: 0 22px; border-bottom: 4px solid var(--ink); background: var(--paper);
+}
+.na-topbar .title {
+  font-size: 16px; font-weight: 900; letter-spacing: -0.02em;
+  white-space: nowrap; text-transform: uppercase;
+}
+.na-scroll { flex: 1; overflow: auto; }
+.na-pad { padding: 26px 30px 60px; max-width: 1080px; margin: 0 auto; width: 100%; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13px; font-weight: 700; border-radius: 0;
+  padding: 10px 16px; border: 3px solid var(--ink); line-height: 1;
+  white-space: nowrap; text-transform: uppercase; letter-spacing: 0.05em;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  box-shadow: var(--shadow-sm); background: var(--surface); color: var(--ink);
+}
+.btn:hover { box-shadow: 6px 6px 0 var(--ink); transform: translate(-1px, -1px); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+.btn-primary { background: var(--brand); color: var(--ink); }
+.btn-primary:hover { background: var(--brand-hover); }
+.btn-ghost { background: transparent; border-color: transparent; box-shadow: none; color: var(--ink-2); }
+.btn-ghost:hover { background: var(--paper); border-color: var(--ink); box-shadow: var(--shadow-sm); color: var(--ink); }
+.btn-outline { background: var(--surface); color: var(--ink); }
+.btn-icon { padding: 8px; }
+.btn-danger { color: var(--danger); border-color: var(--danger); }
+.btn-danger:hover { background: var(--mk-red-fill); }
+
+/* ---------- Chips / tags (BlockFrame label-pills) ---------- */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+  border-radius: var(--r-pill); font-family: var(--font-mono); font-size: 11px;
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  border: 2px solid var(--ink); background: var(--surface); color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.chip .dot { width: 8px; height: 8px; }
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--surface); border: 4px solid var(--ink);
+  border-radius: 0; box-shadow: var(--shadow-md);
+  transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.card.hover:hover {
+  box-shadow: 12px 12px 0 var(--ink);
+  transform: translate(-2px, -2px);
+}
+
+/* ---------- Inputs ---------- */
+.field {
+  width: 100%; font-family: var(--font-mono); font-size: 14px; color: var(--ink);
+  background: var(--surface); border: 3px solid var(--ink); border-radius: 0;
+  padding: 10px 12px; outline: none;
+  transition: box-shadow var(--dur-fast);
+}
+.field:focus { box-shadow: var(--focus-ring); }
+.field::placeholder { color: var(--ink-3); font-style: normal; }
+
+/* ---------- Markdown rendered output ---------- */
+.md { font-size: 15px; line-height: 1.6; color: var(--ink); font-family: var(--font-mono); font-weight: 400; }
+.md > :first-child { margin-top: 0; }
+.md h1 { font-family: var(--font-ui); font-size: 28px; font-weight: 900; letter-spacing: -0.02em; text-transform: uppercase; margin: 1.2em 0 .5em; }
+.md h2 { font-family: var(--font-ui); font-size: 22px; font-weight: 900; letter-spacing: -0.01em; text-transform: uppercase; margin: 1.2em 0 .45em; }
+.md h3 { font-family: var(--font-ui); font-size: 17px; font-weight: 900; text-transform: uppercase; margin: 1.1em 0 .4em; }
+.md p { margin: .6em 0; }
+.md a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; font-weight: 700; }
+.md ul, .md ol { margin: .5em 0; padding-left: 1.4em; }
+.md li { margin: .25em 0; }
+.md li input[type=checkbox] { margin-right: 6px; accent-color: var(--ink); }
+.md blockquote {
+  margin: .8em 0; padding: 12px 16px; border-left: 6px solid var(--ink);
+  background: var(--brand); color: var(--ink); border-radius: 0;
+  box-shadow: var(--shadow-sm);
+}
+.md code { font-family: var(--font-mono); font-size: .88em; background: var(--surface-2);
+  border: 2px solid var(--ink); padding: 1px 5px; }
+.md pre { background: var(--inverse-surface); color: var(--inverse-ink); padding: 16px; border: 4px solid var(--ink); border-radius: 0;
+  overflow: auto; box-shadow: var(--shadow-sm); }
+.md pre code { background: none; border: none; color: inherit; padding: 0; }
+.md table { border-collapse: collapse; margin: .8em 0; width: 100%; border: 4px solid var(--ink); }
+.md th, .md td { border: 2px solid var(--ink); padding: 8px 12px; text-align: left; }
+.md th { background: var(--brand); font-weight: 900; text-transform: uppercase; }
+.md hr { border: none; border-top: 4px solid var(--ink); margin: 1.4em 0; }
+.md img { max-width: 100%; border: 4px solid var(--ink); box-shadow: var(--shadow-sm); }
+
+/* ---------- @remind highlight inside textareas ---------- */
+.remind-strip { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.remind-found {
+  display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px 7px 10px;
+  border-radius: var(--r-pill); background: var(--accent); color: var(--ink);
+  font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+  border: 2px solid var(--ink); box-shadow: var(--shadow-sm);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.remind-found .btn { padding: 4px 10px; font-size: 11px; }
+
+/* ---------- Toasts ---------- */
+.toast-wrap { position: fixed; right: 22px; bottom: 22px; display: flex; flex-direction: column;
+  gap: 10px; z-index: 200; max-width: 340px; }
+.toast {
+  background: var(--inverse-surface); color: var(--inverse-ink);
+  border: 4px solid var(--accent); border-radius: 0;
+  padding: 14px 16px; box-shadow: 8px 8px 0 var(--accent);
+  display: flex; gap: 12px; align-items: flex-start;
+  animation: toastIn var(--dur-slow) var(--ease);
+}
+@keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.toast .tbell {
+  background: var(--accent); color: var(--ink); width: 30px; height: 30px;
+  display: grid; place-items: center; flex: none; border: 2px solid var(--ink);
+}
+.toast .tlabel { font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; }
+.toast .tmeta { font-family: var(--font-mono); font-size: 12px; opacity: .8; margin-top: 2px; }
+.toast .tclose { margin-left: auto; color: var(--inverse-ink); opacity: .6; background: none; border: none; cursor: pointer; }
+.toast .tclose:hover { opacity: 1; }
+
+/* ---------- Empty states ---------- */
+.empty { text-align: center; padding: 60px 20px; color: var(--ink-3); }
+.empty .big {
+  font-family: var(--font-ui); font-size: 24px; font-weight: 900; color: var(--ink-2);
+  margin-bottom: 8px; text-transform: uppercase; letter-spacing: -0.02em;
+}
+
+/* ---------- Misc ---------- */
+.muted { color: var(--ink-2); }
+.faint { color: var(--ink-3); }
+.row { display: flex; align-items: center; gap: 10px; }
+.spacer { flex: 1; }
+.na-icon { display: block; }
+
+/* segmented control */
+.seg {
+  display: inline-flex; background: var(--surface-2); border: 3px solid var(--ink);
+  border-radius: 0; padding: 3px; gap: 3px;
+}
+.segbtn {
+  display: inline-flex; align-items: center; gap: 6px; border: 2px solid transparent;
+  background: none; cursor: pointer; font-size: 12px; font-weight: 700; color: var(--ink-2);
+  padding: 6px 11px; border-radius: 0; transition: all var(--dur-fast) var(--ease);
+  text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-mono);
+}
+.segbtn.on {
+  background: var(--brand); color: var(--ink); border-color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.segbtn:hover:not(.on) { color: var(--ink); background: var(--paper); border-color: var(--ink); }
+
+/* editor textarea */
+.mono-edit { font-family: var(--font-mono); font-size: 14px; }
+.preview-pane {
+  background: var(--surface); border: 4px solid var(--ink); padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Mobile ---------- */
+.na-menu-btn { display: none; }
+@media (max-width: 760px) {
+  .na-side {
+    position: fixed; inset: 0 auto 0 0; z-index: 120; transform: translateX(-100%);
+    transition: transform var(--dur) var(--ease); box-shadow: 8px 0 0 var(--ink);
+  }
+  .na-app.menu-open .na-side { transform: none; }
+  .na-scrim { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 110; }
+  .na-menu-btn { display: inline-flex; }
+  .na-pad { padding: 18px 16px 80px; }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "notearea-app",
+  "pages_build_output_dir": "dist",
+  "compatibility_date": "2024-11-01",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "notearea-db",
+      "database_id": "69ec9177-5f92-480f-8be7-b37da9066d1a"
+    }
+  ]
+}

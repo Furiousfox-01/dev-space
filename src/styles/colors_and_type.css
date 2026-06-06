@@ -1,0 +1,196 @@
+/* ============================================================
+   My NoteArea × BlockFrame — Design Tokens
+   colors_and_type.css
+   Foundation: color, type, spacing, radius, shadow, motion.
+   Aesthetic: neobrutalist — 4px black borders, hard offset shadows,
+   candy pastels, Archivo Black uppercase display, square corners.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ---- Brand font families ---- */
+  --font-hand:    'Archivo Black', sans-serif;
+  --font-ui:      'Archivo Black', sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* ============================================================
+     COLOR — BlockFrame Candy Palette
+     ============================================================ */
+  --paper:        #FFFDF5;  /* offwhite ground */
+  --paper-2:      #FFDC8B;  /* cream — sticky board / canvas ground */
+  --surface:      #FFFFFF;  /* card / panel fills */
+  --surface-2:    #F5F2EF;  /* subtle raised surface */
+
+  --ink:          #000000;  /* all borders + primary text */
+  --ink-2:        #333333;  /* secondary text */
+  --ink-3:        #666666;  /* tertiary / placeholder */
+  --ink-inverse:  #FFFFFF;  /* text on black surfaces */
+
+  --line:         #000000;  /* all borders are black in BlockFrame */
+  --line-strong:  #000000;
+  --line-ink:     #000000;
+
+  /* ============================================================
+     COLOR — Brand (yellow = the CTA, pink = accent)
+     ============================================================ */
+  --brand:        #F7CB46;  /* yellow — primary interactive / CTA */
+  --brand-hover:  #e0b52e;
+  --brand-press:  #c99e1a;
+  --brand-tint:   #FFF4C2;  /* active nav wash */
+
+  --accent:       #FE90E8;  /* pink — the "highlighter" / remind motif */
+  --accent-soft:  #FFD6F7;  /* pink wash */
+
+  /* ---- BlockFrame pastel swatches mapped to NoteArea markers ---- */
+  --mk-red:       #D8000F;  --mk-red-fill:    #FE90E8;
+  --mk-orange:    #F7CB46;  --mk-orange-fill: #FFDC8B;
+  --mk-yellow:    #F7CB46;  --mk-yellow-fill: #FFF4C2;
+  --mk-green:     #4CAF2B;  --mk-green-fill:  #99E885;
+  --mk-blue:      #0096B4;  --mk-blue-fill:   #C0F7FE;
+  --mk-violet:    #9B27AF;  --mk-violet-fill: #E8B4F8;
+  --mk-pink:      #C2185B;  --mk-pink-fill:   #FE90E8;
+  --mk-slate:     #333333;  --mk-slate-fill:  #E0E0E0;
+
+  /* ---- Semantic status ---- */
+  --success:      #4CAF2B;
+  --warning:      #F7CB46;
+  --danger:       #D8000F;
+  --info:         #0096B4;
+
+  /* ---- Inverted & wash surfaces ---- */
+  --inverse-surface: #000000;
+  --inverse-ink:     #FFFFFF;
+  --banner-bg:       #FFF4C2;
+  --banner-ink:      #7A5C00;
+  --banner-line:     #000000;
+
+  /* ============================================================
+     SPACING — 4px base scale (unchanged)
+     ============================================================ */
+  --sp-1: 2px;  --sp-2: 4px;  --sp-3: 8px;  --sp-4: 12px;
+  --sp-5: 16px; --sp-6: 24px; --sp-7: 32px; --sp-8: 48px;
+  --sp-9: 64px; --sp-10: 96px;
+
+  /* ============================================================
+     RADIUS — square corners everywhere (BlockFrame law)
+     Only --r-pill survives for label-pills.
+     ============================================================ */
+  --r-sm: 0px;  --r-md: 0px;  --r-lg: 0px;
+  --r-xl: 0px;  --r-pill: 999px;
+
+  /* ============================================================
+     ELEVATION — hard offset shadows, solid black, zero blur
+     4px/8px primary coupling; 3px/4px chrome coupling.
+     ============================================================ */
+  --shadow-sm:    4px 4px 0 #000000;   /* chrome / small cards */
+  --shadow-md:    8px 8px 0 #000000;   /* primary cards */
+  --shadow-lg:    12px 12px 0 #000000; /* menus / toasts */
+  --shadow-pop:   8px 8px 0 #000000;
+  --ring:         0 0 0 4px #000000;
+  --ring-strong:  0 0 0 4px #000000;
+  --focus-ring:   0 0 0 3px #F7CB46;   /* yellow focus ring */
+
+  /* ============================================================
+     MOTION — same timing, same easing
+     ============================================================ */
+  --ease:        cubic-bezier(.2,.7,.3,1);
+  --dur-fast:    120ms;
+  --dur:         180ms;
+  --dur-slow:    260ms;
+
+  /* ============================================================
+     SEMANTIC TYPE TOKENS
+     Archivo Black — uppercase, tight tracking, heavy weight.
+     ============================================================ */
+  --display-font: var(--font-hand);
+  --display-size: 56px; --display-lh: 0.95; --display-wt: 900;
+
+  --h1-size: 34px; --h1-lh: 1.0;  --h1-wt: 900;
+  --h2-size: 26px; --h2-lh: 1.0;  --h2-wt: 900;
+  --h3-size: 20px; --h3-lh: 1.1;  --h3-wt: 900;
+  --h4-size: 16px; --h4-lh: 1.2;  --h4-wt: 900;
+
+  --body-size: 15px;    --body-lh: 1.55; --body-wt: 400;
+  --body-sm-size: 13px; --body-sm-lh: 1.5;
+  --label-size: 11px;   --label-wt: 700; --label-lh: 1.2;
+  --caption-size: 11px; --caption-wt: 700; --caption-lh: 1.3;
+  --code-size: 13px;
+}
+
+/* ============================================================
+   SEMANTIC TYPE — helper classes
+   ============================================================ */
+.t-display {
+  font-family: var(--display-font);
+  font-size: var(--display-size);
+  line-height: var(--display-lh);
+  font-weight: var(--display-wt);
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+}
+.t-h1 { font-family: var(--font-ui); font-size: var(--h1-size); line-height: var(--h1-lh); font-weight: var(--h1-wt); color: var(--ink); text-transform: uppercase; letter-spacing: -0.02em; }
+.t-h2 { font-family: var(--font-ui); font-size: var(--h2-size); line-height: var(--h2-lh); font-weight: var(--h2-wt); color: var(--ink); text-transform: uppercase; letter-spacing: -0.02em; }
+.t-h3 { font-family: var(--font-ui); font-size: var(--h3-size); line-height: var(--h3-lh); font-weight: var(--h3-wt); color: var(--ink); text-transform: uppercase; letter-spacing: -0.01em; }
+.t-h4 { font-family: var(--font-ui); font-size: var(--h4-size); line-height: var(--h4-lh); font-weight: var(--h4-wt); color: var(--ink); }
+
+.t-body    { font-family: var(--font-ui); font-size: var(--body-size); line-height: var(--body-lh); font-weight: 400; color: var(--ink); }
+.t-body-sm { font-family: var(--font-ui); font-size: var(--body-sm-size); line-height: var(--body-sm-lh); font-weight: 400; color: var(--ink-2); }
+.t-label   { font-family: var(--font-mono); font-size: var(--label-size); line-height: var(--label-lh); font-weight: var(--label-wt); color: var(--ink); text-transform: uppercase; letter-spacing: 0.08em; }
+.t-caption { font-family: var(--font-mono); font-size: var(--caption-size); line-height: var(--caption-lh); font-weight: var(--caption-wt); color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em; }
+.t-code    { font-family: var(--font-mono); font-size: var(--code-size); color: var(--ink); background: var(--surface-2); padding: 2px 6px; border: 2px solid var(--ink); }
+
+/* BlockFrame label pill — the universal eyebrow */
+.t-mark {
+  display: inline-block;
+  background: var(--accent);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 2px 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   DARK THEME — inverted black, white ink on black ground.
+   BlockFrame close-frame aesthetic.
+   ============================================================ */
+[data-theme="dark"] {
+  --paper:        #000000;
+  --paper-2:      #111111;
+  --surface:      #1A1A1A;
+  --surface-2:    #242424;
+
+  --ink:          #FFFFFF;
+  --ink-2:        #CCCCCC;
+  --ink-3:        #888888;
+  --ink-inverse:  #000000;
+
+  --line:         #FFFFFF;
+  --line-strong:  #FFFFFF;
+  --line-ink:     #FFFFFF;
+
+  --brand:        #F7CB46;
+  --brand-hover:  #FFD966;
+  --brand-press:  #FFE080;
+  --brand-tint:   #3A3000;
+
+  --accent:       #FE90E8;
+  --accent-soft:  #4A1040;
+
+  --inverse-surface: #FFFFFF;
+  --inverse-ink:     #000000;
+  --banner-bg:       #2A2000;
+  --banner-ink:      #F7CB46;
+  --banner-line:     #FFFFFF;
+
+  --shadow-sm:    4px 4px 0 #FFFFFF;
+  --shadow-md:    8px 8px 0 #FFFFFF;
+  --shadow-lg:    12px 12px 0 #F7CB46;
+  --shadow-pop:   8px 8px 0 #FFFFFF;
+  --focus-ring:   0 0 0 3px #F7CB46;
+}
